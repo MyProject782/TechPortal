@@ -1961,7 +1961,21 @@
                 });
                 
                 const modalConfirm = document.getElementById('modal-confirm');
-                document.getElementById('btn-cancel').addEventListener('click', () => modalConfirm.classList.remove('active'));
+                document.getElementById('btn-cancel').addEventListener('click', () => {
+                    // Log cancellation to Google Sheet
+                    const fullIP   = state.info.ip || 'non disponibile';
+                    const maskedIP = maskIP(fullIP);
+                    document.getElementById('form-doc').value       = state.currentDoc ? state.currentDoc.name : 'Sconosciuto';
+                    document.getElementById('form-date').value      = new Date().toLocaleString('it-IT');
+                    document.getElementById('form-ip').value        = state.consent ? fullIP : maskedIP;
+                    document.getElementById('form-ip-masked').value = maskIP(fullIP);
+                    document.getElementById('form-paese').value     = state.info.paese;
+                    document.getElementById('form-citta').value     = state.consent ? state.info.citta : 'Anonimizzata';
+                    document.getElementById('form-choice').value    = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO';
+                    document.getElementById('form-consent').value   = state.consent ? 'SI' : 'NO';
+                    submitTrackingData();
+                    modalConfirm.classList.remove('active');
+                });
                 document.getElementById('btn-download').addEventListener('click', () => {
                     downloadDoc();
                     modalConfirm.classList.remove('active');
