@@ -1576,36 +1576,40 @@
             }
             
             function submitTrackingData() {
-                const SCRIPT_URL = document.getElementById('notify-form').action;
-                const fields = {
-                    Documento:              document.getElementById('form-doc').value,
-                    Data_Evento:            document.getElementById('form-date').value,
-                    IP_Client:              document.getElementById('form-ip').value,
-                    IP_Anonimizzato:        document.getElementById('form-ip-masked').value,
-                    Paese_Connessione:      document.getElementById('form-paese').value,
-                    Citta_Connessione:      document.getElementById('form-citta').value,
-                    Browser_UserAgent:      document.getElementById('form-ua').value,
-                    Sistema_Operativo:      document.getElementById('form-os').value,
-                    Risoluzione_Schermo:    document.getElementById('form-res').value,
-                    Lingua_Browser:         document.getElementById('form-lang').value,
-                    Consenso_Tracciamento:  document.getElementById('form-consent').value,
-                    Scelta_Consenso:        document.getElementById('form-choice').value
-                };
+                try {
+                    const SCRIPT_URL = document.getElementById('notify-form').action;
+                    const fields = {
+                        Documento:              document.getElementById('form-doc').value,
+                        Data_Evento:            document.getElementById('form-date').value,
+                        IP_Client:              document.getElementById('form-ip').value,
+                        IP_Anonimizzato:        document.getElementById('form-ip-masked').value,
+                        Paese_Connessione:      document.getElementById('form-paese').value,
+                        Citta_Connessione:      document.getElementById('form-citta').value,
+                        Browser_UserAgent:      document.getElementById('form-ua').value,
+                        Sistema_Operativo:      document.getElementById('form-os').value,
+                        Risoluzione_Schermo:    document.getElementById('form-res').value,
+                        Lingua_Browser:         document.getElementById('form-lang').value,
+                        Consenso_Tracciamento:  document.getElementById('form-consent').value,
+                        Scelta_Consenso:        document.getElementById('form-choice').value
+                    };
 
-                const params = new URLSearchParams(fields).toString();
+                    const params = new URLSearchParams(fields).toString();
+                    const fullURL = SCRIPT_URL + '?' + params;
 
-                // Usiamo GET per garantire la compatibilità con Google Apps Script (doGet).
-                // Con mode:'no-cors' e POST, il body può risultare opaque e GAS non legge
-                // e.parameter correttamente. Con GET l'URL è sempre leggibile da doGet.
-                if (typeof fetch === 'function') {
-                    fetch(SCRIPT_URL + '?' + params, {
-                        method: 'GET',
-                        mode: 'no-cors'
-                    });
-                } else {
-                    // Fallback solo per browser antichissimi senza fetch
-                    const img = new Image();
-                    img.src = SCRIPT_URL + '?' + params;
+                    // GET + no-cors: unico metodo affidabile con Google Apps Script
+                    // da domini esterni (GitHub Pages, Cloudflare, Netlify ecc.)
+                    // doGet(e) legge e.parameter dall'URL senza problemi CORS.
+                    if (typeof fetch === 'function') {
+                        fetch(fullURL, { method: 'GET', mode: 'no-cors' })
+                            .catch(function() {
+                                // Fallback immagine se fetch fallisce
+                                new Image().src = fullURL;
+                            });
+                    } else {
+                        new Image().src = fullURL;
+                    }
+                } catch(err) {
+                    console.error('[TechPortal] submitTrackingData error:', err);
                 }
             }
             function updateIPDisplay(finalMessage = null) {
@@ -1961,17 +1965,21 @@
 
                 // Funzione condivisa per loggare l'annullamento download
                 function logDownloadCancelled() {
-                    const fullIP   = state.info.ip || 'non disponibile';
-                    const maskedIP = maskIP(fullIP);
-                    document.getElementById('form-doc').value       = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO — ' + (state.currentDoc.name || 'Sconosciuto');
-                    document.getElementById('form-date').value      = new Date().toLocaleString('it-IT');
-                    document.getElementById('form-ip').value        = state.consent ? fullIP : maskedIP;
-                    document.getElementById('form-ip-masked').value = maskIP(fullIP);
-                    document.getElementById('form-paese').value     = state.info.paese;
-                    document.getElementById('form-citta').value     = state.consent ? state.info.citta : 'Anonimizzata';
-                    document.getElementById('form-choice').value    = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO';
-                    document.getElementById('form-consent').value   = state.consent ? 'SI' : 'NO';
-                    submitTrackingData();
+                    try {
+                        const fullIP   = state.info.ip || 'non disponibile';
+                        const maskedIP = maskIP(fullIP);
+                        document.getElementById('form-doc').value       = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO — ' + (state.currentDoc.name || 'Sconosciuto');
+                        document.getElementById('form-date').value      = new Date().toLocaleString('it-IT');
+                        document.getElementById('form-ip').value        = state.consent ? fullIP : maskedIP;
+                        document.getElementById('form-ip-masked').value = maskIP(fullIP);
+                        document.getElementById('form-paese').value     = state.info.paese;
+                        document.getElementById('form-citta').value     = state.consent ? state.info.citta : 'Anonimizzata';
+                        document.getElementById('form-choice').value    = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO';
+                        document.getElementById('form-consent').value   = state.consent ? 'SI' : 'NO';
+                        submitTrackingData();
+                    } catch(err) {
+                        console.error('[TechPortal] logDownloadCancelled error:', err);
+                    }
                 }
 
                 document.getElementById('btn-cancel').addEventListener('click', () => {
