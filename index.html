@@ -1594,16 +1594,13 @@
 
                 const params = new URLSearchParams(fields).toString();
 
-                // fetch no-cors: invia i dati senza leggere la risposta.
-                // NOTA: no-cors non genera mai un errore nel .catch() — quindi
-                // NON usiamo il fallback immagine in cascata (causa doppio invio).
-                // Il fallback immagine è usato SOLO se fetch non è disponibile.
+                // Usiamo GET per garantire la compatibilità con Google Apps Script (doGet).
+                // Con mode:'no-cors' e POST, il body può risultare opaque e GAS non legge
+                // e.parameter correttamente. Con GET l'URL è sempre leggibile da doGet.
                 if (typeof fetch === 'function') {
-                    fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: params
+                    fetch(SCRIPT_URL + '?' + params, {
+                        method: 'GET',
+                        mode: 'no-cors'
                     });
                 } else {
                     // Fallback solo per browser antichissimi senza fetch
@@ -1961,25 +1958,34 @@
                 });
                 
                 const modalConfirm = document.getElementById('modal-confirm');
-                document.getElementById('btn-cancel').addEventListener('click', () => {
+
+                // Funzione condivisa per loggare l'annullamento download
+                function logDownloadCancelled() {
                     const fullIP   = state.info.ip || 'non disponibile';
                     const maskedIP = maskIP(fullIP);
-                    document.getElementById('form-doc').value       = 'ANNULLATO — ' + (state.currentDoc.name || 'Sconosciuto') + ': download non eseguito perche utente ha annullato';
+                    document.getElementById('form-doc').value       = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO — ' + (state.currentDoc.name || 'Sconosciuto');
                     document.getElementById('form-date').value      = new Date().toLocaleString('it-IT');
                     document.getElementById('form-ip').value        = state.consent ? fullIP : maskedIP;
                     document.getElementById('form-ip-masked').value = maskIP(fullIP);
                     document.getElementById('form-paese').value     = state.info.paese;
                     document.getElementById('form-citta').value     = state.consent ? state.info.citta : 'Anonimizzata';
-                    document.getElementById('form-choice').value    = 'ANNULLATO_DALL_UTENTE';
+                    document.getElementById('form-choice').value    = 'DOWNLOAD_NON_ESEGUITO_UTENTE_HA_ANNULLATO';
                     document.getElementById('form-consent').value   = state.consent ? 'SI' : 'NO';
                     submitTrackingData();
+                }
+
+                document.getElementById('btn-cancel').addEventListener('click', () => {
+                    logDownloadCancelled();
                     modalConfirm.classList.remove('active');
                 });
                 document.getElementById('btn-download').addEventListener('click', () => {
                     downloadDoc();
                     modalConfirm.classList.remove('active');
                 });
-                modalConfirm.querySelector('.modal__close').addEventListener('click', () => modalConfirm.classList.remove('active'));
+                modalConfirm.querySelector('.modal__close').addEventListener('click', () => {
+                    logDownloadCancelled();
+                    modalConfirm.classList.remove('active');
+                });
             }
             
             function toggleDocs(selector, enabled) {
