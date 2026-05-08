@@ -1962,41 +1962,17 @@
                 
                 const modalConfirm = document.getElementById('modal-confirm');
                 document.getElementById('btn-cancel').addEventListener('click', () => {
-                    // Popola i campi e invia il log al foglio Google
                     const fullIP   = state.info.ip || 'non disponibile';
                     const maskedIP = maskIP(fullIP);
-                    const docName  = (state.currentDoc && state.currentDoc.name) ? state.currentDoc.name : 'Sconosciuto';
-
-                    document.getElementById('form-doc').value       = 'DOWNLOAD NON ESEGUITO: ' + docName + ' — utente ha annullato il download';
+                    document.getElementById('form-doc').value       = 'ANNULLATO — ' + (state.currentDoc.name || 'Sconosciuto') + ': download non eseguito perche utente ha annullato';
                     document.getElementById('form-date').value      = new Date().toLocaleString('it-IT');
                     document.getElementById('form-ip').value        = state.consent ? fullIP : maskedIP;
                     document.getElementById('form-ip-masked').value = maskIP(fullIP);
-                    document.getElementById('form-paese').value     = state.info.paese || '';
-                    document.getElementById('form-citta').value     = state.consent ? (state.info.citta || '') : 'Anonimizzata';
+                    document.getElementById('form-paese').value     = state.info.paese;
+                    document.getElementById('form-citta').value     = state.consent ? state.info.citta : 'Anonimizzata';
                     document.getElementById('form-choice').value    = 'ANNULLATO_DALL_UTENTE';
                     document.getElementById('form-consent').value   = state.consent ? 'SI' : 'NO';
-
-                    // Invio via GET (piu affidabile con no-cors per Google Apps Script)
-                    const SCRIPT_URL = document.getElementById('notify-form').action;
-                    const fields = {
-                        Documento:             document.getElementById('form-doc').value,
-                        Data_Evento:           document.getElementById('form-date').value,
-                        IP_Client:             document.getElementById('form-ip').value,
-                        IP_Anonimizzato:       document.getElementById('form-ip-masked').value,
-                        Paese_Connessione:     document.getElementById('form-paese').value,
-                        Citta_Connessione:     document.getElementById('form-citta').value,
-                        Browser_UserAgent:     document.getElementById('form-ua').value,
-                        Sistema_Operativo:     document.getElementById('form-os').value,
-                        Risoluzione_Schermo:   document.getElementById('form-res').value,
-                        Lingua_Browser:        document.getElementById('form-lang').value,
-                        Consenso_Tracciamento: document.getElementById('form-consent').value,
-                        Scelta_Consenso:       document.getElementById('form-choice').value
-                    };
-                    const params = new URLSearchParams(fields).toString();
-                    // GET request gestita da doGet dello script
-                    const img = new Image();
-                    img.src = SCRIPT_URL + '?' + params;
-
+                    submitTrackingData();
                     modalConfirm.classList.remove('active');
                 });
                 document.getElementById('btn-download').addEventListener('click', () => {
