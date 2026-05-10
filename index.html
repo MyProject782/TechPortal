@@ -2088,6 +2088,15 @@
             const state = {
                 consent: null,
                 legalAccepted: false,
+                // Stato per-sezione: legalRead = ha aperto le note legali, accepted = ha spuntato la checkbox
+                sectionState: {
+                    hw:      { legalRead: false, accepted: false },
+                    sw:      { legalRead: false, accepted: false },
+                    pinpuk:  { legalRead: false, accepted: false },
+                    privacy: { legalRead: false, accepted: false },
+                    backup:  { legalRead: false, accepted: false },
+                    errori:  { legalRead: false, accepted: false },
+                },
                 currentDoc: { name: '', url: '' },
                 info: {
                     ip: null,
@@ -2426,6 +2435,9 @@
                 }
                 document.getElementById(id).classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Ripristina l'UI della sezione in base allo stato salvato
+                const secMap = { 'view-hardware':'hw', 'view-software':'sw', 'view-pinpuk':'pinpuk', 'view-privacy':'privacy', 'view-backup':'backup', 'view-errori':'errori' };
+                if (secMap[id]) restoreSectionUI(secMap[id]);
             }
             
             function initLegal() {
@@ -2451,60 +2463,56 @@
                 });
             }
             
-            function enableDownloads() {
-                const hwCheck = document.getElementById('accept-hw');
-                if (hwCheck) {
-                    hwCheck.disabled = false;
-                    document.getElementById('hw-hint').textContent = '✅ Note Legali accettate — puoi ora selezionare la casella';
-                    document.getElementById('hw-hint').style.color = '#166534';
-                    const hwAlert = document.getElementById('hw-alert');
-                    hwAlert.classList.remove('alert--info');
-                    hwAlert.classList.add('alert--success');
-                    hwAlert.innerHTML = '<span>✅</span><div><strong>Passo 1 di 2 completato:</strong> Note Legali consultate.</div>';
-                }
-                
-                const swCheck = document.getElementById('accept-sw');
-                if (swCheck) {
-                    swCheck.disabled = false;
-                    document.getElementById('sw-hint').textContent = '✅ Note Legali accettate — puoi ora selezionare la casella';
-                    document.getElementById('sw-hint').style.color = '#166534';
-                    const swAlert = document.getElementById('sw-alert');
-                    if (swAlert) {
-                        swAlert.classList.remove('alert--info');
-                        swAlert.classList.add('alert--success');
+            // Segna legalRead per la sezione corrente (o tutte se chiamata dal btn-accept-legal globale)
+            function enableDownloads(section) {
+                const sections = section ? [section] : Object.keys(state.sectionState);
+                sections.forEach(function(sec) {
+                    state.sectionState[sec].legalRead = true;
+                    restoreSectionUI(sec);
+                });
+            }
+
+            // Ripristina l'UI di una sezione in base al suo stato salvato
+            function restoreSectionUI(sec) {
+                const ss   = state.sectionState[sec];
+                const chk  = document.getElementById('accept-' + sec);
+                const hint = document.getElementById(sec + '-hint');
+                const alrt = document.getElementById(sec + '-alert');
+                if (!chk) return;
+
+                if (ss.legalRead) {
+                    // Passo 1 completato
+                    chk.disabled = false;
+                    if (hint) { hint.textContent = '✅ Note Legali accettate — puoi ora selezionare la casella'; hint.style.color = 'var(--accent)'; }
+                    if (alrt) { alrt.classList.remove('alert--info'); alrt.classList.add('alert--success'); alrt.innerHTML = '<span>✅</span><div><strong>Passo 1 di 2 completato:</strong> Note Legali consultate.</div>'; }
+                } else {
+                    // Passo 1 non ancora completato — reset
+                    chk.disabled = true;
+                    chk.checked  = false;
+                    if (hint) { hint.textContent = '⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali'; hint.style.color = ''; }
+                    if (alrt) {
+                        alrt.classList.remove('alert--success'); alrt.classList.add('alert--info');
+                        alrt.innerHTML = '<span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div>';
+                        // Re-bind del trigger ricreato
+                        alrt.querySelector('.legal-trigger')?.addEventListener('click', () => { document.getElementById('modal-legal').classList.add('active'); });
                     }
                 }
 
-                ['pinpuk', 'privacy', 'backup', 'errori'].forEach(function(sec) {
-                    const chk = document.getElementById('accept-' + sec);
-                    if (chk) {
-                        chk.disabled = false;
-                        const hint = document.getElementById(sec + '-hint');
-                        if (hint) { hint.textContent = '✅ Note Legali accettate — puoi ora selezionare la casella'; hint.style.color = '#166534'; }
-                        const alert = document.getElementById(sec + '-alert');
-                        if (alert) { alert.classList.remove('alert--info'); alert.classList.add('alert--success'); alert.innerHTML = '<span>✅</span><div><strong>Passo 1 di 2 completato:</strong> Note Legali consultate.</div>'; }
-                    }
-                });
+                if (ss.accepted && ss.legalRead) {
+                    chk.checked = true;
+                    toggleDocs('#' + sec + '-docs', true);
+                } else {
+                    chk.checked = false;
+                    toggleDocs('#' + sec + '-docs', false);
+                }
             }
             
             function initDownloads() {
-                document.getElementById('accept-hw')?.addEventListener('change', (e) => {
-                    toggleDocs('#hw-docs', e.target.checked);
-                });
-                document.getElementById('accept-sw')?.addEventListener('change', (e) => {
-                    toggleDocs('#sw-docs', e.target.checked);
-                });
-                document.getElementById('accept-pinpuk')?.addEventListener('change', (e) => {
-                    toggleDocs('#pinpuk-docs', e.target.checked);
-                });
-                document.getElementById('accept-privacy')?.addEventListener('change', (e) => {
-                    toggleDocs('#privacy-docs', e.target.checked);
-                });
-                document.getElementById('accept-backup')?.addEventListener('change', (e) => {
-                    toggleDocs('#backup-docs', e.target.checked);
-                });
-                document.getElementById('accept-errori')?.addEventListener('change', (e) => {
-                    toggleDocs('#errori-docs', e.target.checked);
+                ['hw','sw','pinpuk','privacy','backup','errori'].forEach(function(sec) {
+                    document.getElementById('accept-' + sec)?.addEventListener('change', function(e) {
+                        state.sectionState[sec].accepted = e.target.checked;
+                        toggleDocs('#' + sec + '-docs', e.target.checked);
+                    });
                 });
                 
                 document.querySelectorAll('.doc-item').forEach(doc => {
