@@ -12,7 +12,7 @@
     <meta name="author" content="TechPortal">
     
     <meta name="theme-color" content="#0f172a">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="dark">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -53,22 +53,22 @@
         }
         
         :root {
-            --bg: #f5f5f5;
-            --card-bg: #ffffff;
-            --primary: #1a1a2e;
+            --bg: #0d1628;
+            --card-bg: #162035;
+            --primary: #e2e8f0;
             --accent: #00d4aa;
             --accent-dark: #00b894;
-            --warning-bg: #fffbeb;
-            --warning-border: #f59e0b;
-            --warning-text: #92400e;
+            --warning-bg: rgba(245,158,11,0.07);
+            --warning-border: rgba(245,158,11,0.3);
+            --warning-text: #fbbf24;
             --code-bg: #0f172a;
             --code-text: #e2e8f0;
             --code-green: #6ee7b7;
             --code-blue: #7dd3fc;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            --text-muted: #7a93b4;
+            --border: rgba(255,255,255,0.08);
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
             --radius: 12px;
             --radius-sm: 8px;
         }
@@ -121,7 +121,7 @@
         }
 
         .tracking-card {
-            background: #253352;
+            background: #111d32;
             border-radius: 20px;
             width: 100%;
             max-width: 820px;
@@ -564,11 +564,11 @@
             position: absolute;
             top: calc(100% + 8px);
             left: 0;
-            background: var(--card-bg);
+            background: #1a2744;
             min-width: 320px;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,212,170,0.12);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.5);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
@@ -590,7 +590,7 @@
             text-transform: uppercase;
             color: var(--text-muted);
             border-bottom: 1px solid var(--border);
-            background: #f8fafc;
+            background: rgba(255,255,255,0.04);
         }
         
         .dropdown__list { list-style: none; padding: 8px; }
@@ -600,7 +600,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 16px;
-            color: var(--primary);
+            color: #cbd5e1;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -611,8 +611,8 @@
         }
         
         .dropdown__link:hover {
-            background: #f0f9ff;
-            color: #0284c7;
+            background: rgba(0,212,170,0.08);
+            color: #00d4aa;
         }
 
         /* Su mobile il dropdown è inline nel menu scuro: testo chiaro */
@@ -655,7 +655,7 @@
         }
         
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #252542 100%);
+            background: linear-gradient(135deg, #0d1628 0%, #162035 50%, #1a2744 100%);
             color: white;
             padding: 80px 20px;
             text-align: center;
@@ -715,7 +715,7 @@
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            background: #253352;
+            background: #111d32;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         
@@ -770,7 +770,7 @@
         .section__title {
             font-size: clamp(24px, 4vw, 32px);
             font-weight: 700;
-            color: var(--primary);
+            color: #e2e8f0;
             margin-bottom: 12px;
         }
         
@@ -808,7 +808,7 @@
             justify-content: center;
             font-size: 24px;
             margin-bottom: 16px;
-            background: #f0fdfa;
+            background: rgba(0,212,170,0.08);
         }
         
         .feature-card__title {
@@ -829,7 +829,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: var(--accent-dark);
+            color: var(--accent);
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
@@ -854,7 +854,7 @@
         .content-card__title {
             font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
+            color: #e2e8f0;
             margin-bottom: 24px;
         }
         
@@ -869,15 +869,15 @@
         }
         
         .alert--info {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1e40af;
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+            color: #93c5fd;
         }
         
         .alert--success {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            color: #166534;
+            background: rgba(0,212,170,0.07);
+            border: 1px solid rgba(0,212,170,0.2);
+            color: #6ee7b7;
         }
         
         .disclaimer-box {
@@ -913,7 +913,7 @@
         .disclaimer-box__hint {
             display: block;
             font-size: 12px;
-            color: #b45309;
+            color: #f59e0b;
             margin-bottom: 4px;
         }
         
@@ -929,12 +929,12 @@
             align-items: center;
             gap: 12px;
             padding: 16px;
-            background: #f8fafc;
+            background: rgba(255,255,255,0.04);
             border: 1px solid var(--border);
-            border-left: 4px solid var(--border);
+            border-left: 4px solid rgba(255,255,255,0.1);
             border-radius: var(--radius-sm);
             text-decoration: none;
-            color: var(--primary);
+            color: #94a3b8;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             font-weight: 500;
@@ -946,13 +946,13 @@
         .doc-item[aria-disabled="true"] {
             opacity: 0.5;
             pointer-events: none;
-            background: #f1f5f9;
+            background: rgba(255,255,255,0.02);
         }
         
         .doc-item:not([aria-disabled="true"]) {
             border-left-color: var(--accent);
             cursor: pointer;
-            background: var(--card-bg);
+            background: rgba(0,212,170,0.04);
         }
         
         .doc-item:not([aria-disabled="true"]):hover {
@@ -961,12 +961,12 @@
         }
         
         .btn-secondary {
-            background: #f1f5f9;
-            color: var(--primary);
+            background: rgba(255,255,255,0.06);
+            color: #94a3b8;
             border: 1px solid var(--border);
         }
         
-        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
         
         .modal {
             position: fixed;
@@ -983,11 +983,11 @@
         .modal.active { display: flex; }
         
         .modal__content {
-            background: var(--card-bg);
+            background: #162035;
             border-radius: var(--radius);
             width: 100%;
             max-width: 500px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 0 0 1px rgba(0,212,170,0.12), 0 24px 64px rgba(0,0,0,0.6);
             position: relative;
         }
         
@@ -1010,8 +1010,8 @@
         }
         
         .modal__close:hover {
-            color: #dc2626;
-            background: #fef2f2;
+            color: #f87171;
+            background: rgba(248,113,113,0.1);
         }
         
         .confirm-content {
@@ -1026,17 +1026,17 @@
         
         .confirm-text {
             font-weight: 600;
-            color: var(--primary);
+            color: #e2e8f0;
             margin-bottom: 16px;
         }
         
         .confirm-warning {
-            background: #fef2f2;
-            border-left: 4px solid #dc2626;
+            background: rgba(220,38,38,0.08);
+            border-left: 4px solid rgba(220,38,38,0.6);
             padding: 16px;
             margin-bottom: 24px;
             font-size: 14px;
-            color: #991b1b;
+            color: #fca5a5;
             border-radius: 0 8px 8px 0;
         }
         
@@ -1068,7 +1068,7 @@
         .legal-text h3 {
             font-size: 14px;
             font-weight: 700;
-            color: var(--primary);
+            color: #cbd5e1;
             margin: 20px 0 12px;
         }
         
@@ -1079,7 +1079,7 @@
         .legal-checkbox-wrapper {
             margin: 24px 0;
             padding: 16px;
-            background: #f8fafc;
+            background: rgba(255,255,255,0.04);
             border-radius: 8px;
             border: 1px solid var(--border);
         }
@@ -1090,6 +1090,7 @@
             gap: 12px;
             cursor: pointer;
             font-size: 14px;
+            color: #cbd5e1;
         }
         
         .legal-checkbox-wrapper input {
@@ -1235,7 +1236,7 @@
                 align-items: stretch;
                 width: 100%;
                 display: none;
-                background: rgba(255,255,255,0.08);
+                background: rgba(255,255,255,0.06);
                 border-radius: 10px;
                 padding: 8px;
                 gap: 4px;
@@ -1285,7 +1286,7 @@
         .modal-contact.active { display: flex; }
 
         .contact-card {
-            background: #253352;
+            background: #111d32;
             border-radius: 18px;
             width: 100%;
             max-width: 480px;
@@ -1437,6 +1438,252 @@
             .contact-card { border-radius: 20px 20px 0 0; max-width: 100%; }
             .modal-contact { padding: 0; align-items: flex-end; }
         }
+
+        /* ═══════════════════════════════════════════════
+           DARK PREMIUM THEME — overrides coerenti col modal
+           ═══════════════════════════════════════════════ */
+
+        /* Subtle noise texture on the body for depth */
+        body {
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(0,212,170,0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,153,204,0.03) 0%, transparent 60%);
+        }
+
+        /* Content card — dark glass */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.07);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4aa, #0099cc 60%, transparent);
+        }
+        .content-card__title {
+            color: #e2e8f0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        /* Feature cards — dark glass */
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 0%, rgba(0,212,170,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .feature-card:hover {
+            border-color: rgba(0,212,170,0.3);
+            background: rgba(22,32,53,0.95);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,170,0.15);
+        }
+        .feature-card__title { color: #e2e8f0; }
+        .feature-card__text  { color: #7a93b4; }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(160deg, #0a1220 0%, #0d1628 40%, #111d32 100%);
+            border-bottom: 1px solid rgba(0,212,170,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0,212,170,0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,153,204,0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero__subtitle { color: #7a93b4; }
+        .hero__title    { color: #f1f5f9; }
+
+        /* Stats bar */
+        .stats-bar {
+            background: #0f1a2e;
+            border-top: 1px solid rgba(0,212,170,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .stat__label { color: #475569; }
+
+        /* Section header */
+        .section__title       { color: #e2e8f0; }
+        .section__description { color: #7a93b4; }
+
+        /* Alert info */
+        .alert--info {
+            background: rgba(59,130,246,0.07);
+            border: 1px solid rgba(59,130,246,0.18);
+            color: #93c5fd;
+        }
+        .alert--info strong { color: #bfdbfe; }
+        .alert--success {
+            background: rgba(0,212,170,0.06);
+            border: 1px solid rgba(0,212,170,0.18);
+            color: #6ee7b7;
+        }
+
+        /* Disclaimer box */
+        .disclaimer-box {
+            background: rgba(245,158,11,0.06);
+            border: 1px solid rgba(245,158,11,0.2);
+        }
+        .disclaimer-box__label { color: #94a3b8; }
+        .disclaimer-box__hint  { color: #f59e0b; }
+
+        /* Doc items */
+        .doc-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-left: 4px solid rgba(255,255,255,0.08);
+            color: #7a93b4;
+        }
+        .doc-item[aria-disabled="true"] {
+            background: rgba(255,255,255,0.02);
+            opacity: 0.45;
+        }
+        .doc-item:not([aria-disabled="true"]) {
+            border-left-color: var(--accent);
+            background: rgba(0,212,170,0.04);
+            color: #94a3b8;
+        }
+        .doc-item:not([aria-disabled="true"]):hover {
+            background: rgba(0,212,170,0.08);
+            border-color: rgba(0,212,170,0.3);
+            color: #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Back button */
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #7a93b4;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.09);
+            color: #e2e8f0;
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        /* Dropdown desktop */
+        .dropdown {
+            background: #1a2744;
+            border: 1px solid rgba(0,212,170,0.12);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .dropdown__header {
+            background: rgba(0,212,170,0.04);
+            color: #475569;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .dropdown__link { color: #94a3b8; }
+        .dropdown__link:hover {
+            background: rgba(0,212,170,0.08);
+            color: #00d4aa;
+        }
+
+        /* Modal confirm / legal */
+        .modal__content {
+            background: #162035 !important;
+            border: 1px solid rgba(0,212,170,0.12);
+            box-shadow: 0 0 0 1px rgba(0,212,170,0.08), 0 32px 80px rgba(0,0,0,0.65);
+        }
+        .modal__close { color: #475569; }
+        .modal__close:hover { color: #f87171; background: rgba(248,113,113,0.08); }
+        .confirm-title { color: #e2e8f0; }
+        .confirm-text  { color: #cbd5e1; }
+        .confirm-warning {
+            background: rgba(220,38,38,0.07);
+            border-left-color: rgba(220,38,38,0.5);
+            color: #fca5a5;
+        }
+        .confirm-warning strong { color: #f87171; }
+
+        /* Legal modal */
+        .legal-title { color: #e2e8f0; }
+        .legal-text  { color: #7a93b4; }
+        .legal-text h3 { color: #cbd5e1; }
+        .legal-text strong { color: #f87171; }
+        .legal-checkbox-wrapper {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .legal-checkbox-wrapper label { color: #94a3b8; }
+
+        /* Footer */
+        .site-footer {
+            background: #0a1220;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-brand span { color: #7a93b4; }
+
+        /* Header border accent */
+        .site-header {
+            background: rgba(10,18,32,0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0,212,170,0.15);
+        }
+
+        /* Nav list mobile */
+        @media (max-width: 640px) {
+            .nav-list {
+                background: rgba(10,18,32,0.97);
+                border: 1px solid rgba(255,255,255,0.06);
+            }
+            .dropdown {
+                background: rgba(26,39,68,0.8);
+            }
+        }
+
+        /* Scrollbar dark */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0d1628; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,212,170,0.25); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,212,170,0.45); }
+
+        /* Generic section */
+        #view-generic .content-card { text-align: center; }
+        #view-generic p { color: #7a93b4; }
+
+        /* Modal backdrop dark */
+        .modal {
+            background: rgba(5,10,25,0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Features section bg */
+        .features-section {
+            background: transparent;
+        }
+
+        /* code-label color fix */
+        .code-label { color: #475569; }
+        .ip-note { color: #2d3e5a; }
+        .code-box.loading::after { color: #334155; }
     </style>
 </head>
 
@@ -1607,14 +1854,14 @@
         </section>
 
         <!-- HARDWARE -->
-        <section id="view-hardware" class="view-section"><div class="content-view"><article class="content-card"><h2 class="content-card__title">Documentazione Hardware</h2><div class="alert alert--info" id="hw-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div><div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-hw" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="hw-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div><div class="doc-list" id="hw-docs"><a href="documenti/Batteria_guida.pdf" class="doc-item" data-name="Batteria_capire_se_vecchia_o_stanca" aria-disabled="true">📄 Batteria_capire_se_vecchia_o_stanca</a><a href="documenti/Display_OLED_vs_LCD.pdf" class="doc-item" data-name="Display_OLED_vs_LCD" aria-disabled="true">📄 Display_OLED_vs_LCD</a><a href="documenti/Guida_pratica_ai_cavetti.pdf" class="doc-item" data-name="Guida_pratica_ai_cavetti" aria-disabled="true">📄 Guida_pratica_ai_cavetti</a><a href="documenti/megapixel_e_lenti.pdf" class="doc-item" data-name="Il_mito_del_megapixel" aria-disabled="true">📄 Il_mito_del_megapixel</a><a href="documenti/Il_Processore_dello_Smartphone.pdf" class="doc-item" data-name="Il_Processore_dello_Smartphone" aria-disabled="true">📄 Il_Processore_dello_Smartphone</a><a href="documenti/Il_Vetro_dello_Schermo.pdf" class="doc-item" data-name="Il_Vetro_dello_Schermo" aria-disabled="true">📄 Il_Vetro_dello_Schermo</a><a href="documenti/Perche_il_telefono_si_scalda.pdf" class="doc-item" data-name="Perche_il_telefono_si_scalda" aria-disabled="true">📄 Perche_il_telefono_si_scalda</a><a href="documenti/Quanti_Giga_Ti_Servono_Davvero.pdf" class="doc-item" data-name="Quanti_Giga_ti_Servono_Davvero" aria-disabled="true">📄 Quanti_Giga_ti_Servono_Davvero</a><a href="documenti/Sensore_Impronte_vs_Riconoscimento_Facciale.pdf" class="doc-item" data-name="Sensore_o_riconoscimento_Facciale" aria-disabled="true">📄 Sensore_o_riconoscimento_Facciale</a><a href="documenti/tasto_home_virtuale.pdf" class="doc-item" data-name="Tasto_home_virtuale" aria-disabled="true">📄 Tasto_home_virtuale</a></div><button type="button" class="btn btn-secondary btn-back">← Torna alla Home</button></article></div></section>
+        <section id="view-hardware" class="view-section"><div class="content-view"><article class="content-card"><h2 class="content-card__title">Documentazione Hardware</h2><div class="alert alert--info" id="hw-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div><div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-hw" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="hw-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div><div class="doc-list" id="hw-docs"><a href="documenti/Batteria_guida.pdf" class="doc-item" data-name="Batteria_capire_se_vecchia_o_stanca" aria-disabled="true">📄 Batteria_capire_se_vecchia_o_stanca</a><a href="documenti/Display_OLED_vs_LCD.pdf" class="doc-item" data-name="Display_OLED_vs_LCD" aria-disabled="true">📄 Display_OLED_vs_LCD</a><a href="documenti/Guida_pratica_ai_cavetti.pdf" class="doc-item" data-name="Guida_pratica_ai_cavetti" aria-disabled="true">📄 Guida_pratica_ai_cavetti</a><a href="documenti/megapixel_e_lenti.pdf" class="doc-item" data-name="Il_mito_del_megapixel" aria-disabled="true">📄 Il_mito_del_megapixel</a><a href="documenti/Il_Processore_dello_Smartphone.pdf" class="doc-item" data-name="Il_Processore_dello_Smartphone" aria-disabled="true">📄 Il_Processore_dello_Smartphone</a><a href="documenti/Il_Vetro_dello_Schermo.pdf" class="doc-item" data-name="Il_Vetro_dello_Schermo" aria-disabled="true">📄 Il_Vetro_dello_Schermo</a><a href="documenti/Perche_il_telefono_si_scalda.pdf" class="doc-item" data-name="Perche_il_telefono_si_scalda" aria-disabled="true">📄 Perche_il_telefono_si_scalda</a><a href="documenti/Quanti_Giga_Ti_Servono_Davvero.pdf" class="doc-item" data-name="Quanti_Giga_ti_Servono_Davvero" aria-disabled="true">📄 Quanti_Giga_ti_Servono_Davvero</a><a href="documenti/Sensore_Impronte_vs_Riconoscimento_Facciale.pdf" class="doc-item" data-name="Sensore_o_riconoscimento_Facciale" aria-disabled="true">📄 Sensore_o_riconoscimento_Facciale</a><a href="documenti/tasto_home_virtuale.pdf" class="doc-item" data-name="Tasto_home_virtuale" aria-disabled="true">📄 Tasto_home_virtuale</a></div><button type="button" class="btn btn-secondary btn-back">← Torna alla Home</button></article></div></section>
 
         <!-- SOFTWARE (aggiornato con tutti i PDF) -->
         <section id="view-software" class="view-section">
             <div class="content-view">
                 <article class="content-card">
                     <h2 class="content-card__title">Software e app gratuite</h2>
-                    <div class="alert alert--info" id="sw-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button>.</div></div>
+                    <div class="alert alert--info" id="sw-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button>.</div></div>
                     <div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-sw" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="sw-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div>
                     <div class="doc-list" id="sw-docs">
                         <a href="documenti/App_salute.pdf" class="doc-item" data-name="App_salute" aria-disabled="true">📄 App_salute</a>
@@ -1638,7 +1885,7 @@
             <div class="content-view">
                 <article class="content-card">
                     <h2 class="content-card__title">Il significato di PIN e PUK</h2>
-                    <div class="alert alert--info" id="pinpuk-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
+                    <div class="alert alert--info" id="pinpuk-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
                     <div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-pinpuk" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="pinpuk-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div>
                     <div class="doc-list" id="pinpuk-docs">
                         <a href="documenti/Codice_PIN_prima_linea_difesa.pdf" class="doc-item" data-name="Codice_PIN_prima_linea_difesa" aria-disabled="true">📄 Codice_PIN_prima_linea_difesa</a>
@@ -1657,7 +1904,7 @@
             <div class="content-view">
                 <article class="content-card">
                     <h2 class="content-card__title">Privacy e Protezione</h2>
-                    <div class="alert alert--info" id="privacy-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
+                    <div class="alert alert--info" id="privacy-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
                     <div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-privacy" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="privacy-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div>
                     <div class="doc-list" id="privacy-docs">
                         <a href="documenti/Permessi_delle_App.pdf" class="doc-item" data-name="Permessi_delle_App" aria-disabled="true">📄 Permessi_delle_App</a>
@@ -1681,7 +1928,7 @@
             <div class="content-view">
                 <article class="content-card">
                     <h2 class="content-card__title">Backup e Manutenzione</h2>
-                    <div class="alert alert--info" id="backup-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
+                    <div class="alert alert--info" id="backup-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
                     <div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-backup" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="backup-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div>
                     <div class="doc-list" id="backup-docs">
                         <a href="documenti/Cosa_é_il_Cloud_Guida_Completa.pdf" class="doc-item" data-name="Cosa_è_il_Cloud_Guida_Completa" aria-disabled="true">📄 Cosa_è_il_Cloud_Guida_Completa</a>
@@ -1700,7 +1947,7 @@
             <div class="content-view">
                 <article class="content-card">
                     <h2 class="content-card__title">Errori Comuni e Soluzioni</h2>
-                    <div class="alert alert--info" id="errori-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:#0060c0;text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
+                    <div class="alert alert--info" id="errori-alert"><span>📋</span><div><strong>Passo 1 di 2:</strong> Leggi prima le <button type="button" class="legal-trigger" style="background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:700;">Note Legali e la Limitazione di Responsabilità</button> per abilitare la casella di accettazione.</div></div>
                     <div class="disclaimer-box"><label class="disclaimer-box__control"><input type="checkbox" id="accept-errori" class="disclaimer-box__checkbox" disabled><span class="disclaimer-box__label"><span class="disclaimer-box__hint" id="errori-hint">⚠️ Passo 2 di 2 — disponibile solo dopo aver consultato le Note Legali</span>Dichiaro di aver preso visione e accettato integralmente le Note Legali e la Limitazione di Responsabilità — abilita i link ai documenti</span></label></div>
                     <div class="doc-list" id="errori-docs">
                         <a href="documenti/Il_mito_del_riso.pdf" class="doc-item" data-name="Il_mito_del_riso" aria-disabled="true">📄 Il_mito_del_riso</a>
