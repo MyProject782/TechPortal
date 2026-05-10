@@ -2685,10 +2685,58 @@
                 if (btnClose) btnClose.addEventListener('click', closeContact);
                 modal.addEventListener('click', (e) => { if (e.target === modal) closeContact(); });
 
+                // ── Validazione anti-spam lato client ──
+                function validateContact(name, email, msg) {
+                    // 1. Messaggio obbligatorio e lunghezza minima
+                    if (!msg) return 'Inserisci un messaggio.';
+                    if (msg.length < 10) return 'Il messaggio è troppo breve (min. 10 caratteri).';
+
+                    // 2. Caratteri ripetuti: rileva sequenze tipo "wwwwww", "rrrrr", "eeeeee"
+                    function hasRepeatedChars(str, threshold) {
+                        return /(.)\1{4,}/.test(str); // stesso char ripetuto 5+ volte
+                    }
+                    if (hasRepeatedChars(name)) return 'Il nome non sembra valido.';
+                    if (hasRepeatedChars(email)) return 'L\'email non sembra valida.';
+                    if (hasRepeatedChars(msg)) return 'Il messaggio contiene caratteri ripetuti non validi.';
+
+                    // 3. Messaggio composto quasi solo dallo stesso carattere
+                    function isMonotone(str) {
+                        if (!str) return false;
+                        const freq = {};
+                        for (const c of str.toLowerCase().replace(/\s/g, '')) {
+                            freq[c] = (freq[c] || 0) + 1;
+                        }
+                        const total = str.replace(/\s/g, '').length;
+                        if (total === 0) return false;
+                        const maxFreq = Math.max(...Object.values(freq));
+                        return maxFreq / total > 0.6; // un singolo char occupa >60%
+                    }
+                    if (isMonotone(msg)) return 'Il messaggio non sembra valido. Scrivi qualcosa di comprensibile.';
+
+                    // 4. Email: formato base (se inserita)
+                    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+                        return 'L\'indirizzo email non è valido.';
+                    }
+
+                    // 5. Lunghezza massima ragionevole
+                    if (msg.length > 2000) return 'Il messaggio è troppo lungo (max 2000 caratteri).';
+
+                    // 6. Link o HTML nel messaggio (spam comune)
+                    if (/<[^>]+>/.test(msg)) return 'Il messaggio non può contenere codice HTML.';
+                    const linkCount = (msg.match(/https?:\/\//g) || []).length;
+                    if (linkCount > 2) return 'Il messaggio contiene troppi link.';
+
+                    return null; // nessun errore
+                }
+
                 btnSend.addEventListener('click', async () => {
-                    const msg = document.getElementById('contact-message').value.trim();
-                    if (!msg) {
-                        status.textContent = 'Inserisci un messaggio.';
+                    const name  = document.getElementById('contact-name').value.trim();
+                    const email = document.getElementById('contact-email').value.trim();
+                    const msg   = document.getElementById('contact-message').value.trim();
+
+                    const validationError = validateContact(name, email, msg);
+                    if (validationError) {
+                        status.textContent = '⚠ ' + validationError;
                         status.className = 'contact-status error';
                         return;
                     }
@@ -2702,8 +2750,8 @@
                     const formData = new FormData();
                     formData.append('access_key', ACCESS_KEY);
                     formData.append('subject',    'Messaggio da TechPortal');
-                    formData.append('name',        document.getElementById('contact-name').value.trim()  || 'Anonimo');
-                    formData.append('email',       document.getElementById('contact-email').value.trim() || 'noreply@techportal');
+                    formData.append('name',        name  || 'Anonimo');
+                    formData.append('email',       email || 'noreply@techportal');
                     formData.append('message',     msg);
 
                     try {
