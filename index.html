@@ -1268,6 +1268,175 @@
             white-space: nowrap;
             border: 0;
         }
+
+        /* ── MODALE CONTATTO ── */
+        .modal-contact {
+            position: fixed;
+            inset: 0;
+            z-index: 4000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(5,10,25,0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-contact.active { display: flex; }
+
+        .contact-card {
+            background: #253352;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow:
+                0 0 0 1px rgba(0,212,170,0.15),
+                0 24px 48px rgba(0,0,0,0.5);
+            animation: cardIn 0.3s cubic-bezier(.22,.68,0,1.2) both;
+            overflow: hidden;
+        }
+
+        .contact-header {
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .contact-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .contact-close {
+            background: none;
+            border: none;
+            color: #475569;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 6px;
+            transition: color 0.15s;
+        }
+
+        .contact-close:hover { color: #94a3b8; }
+
+        .contact-body {
+            padding: 22px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .contact-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .contact-input,
+        .contact-textarea {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 11px 14px;
+            color: #e2e8f0;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .contact-input::placeholder,
+        .contact-textarea::placeholder { color: #334155; }
+
+        .contact-input:focus,
+        .contact-textarea:focus {
+            border-color: rgba(0,212,170,0.4);
+            box-shadow: 0 0 0 3px rgba(0,212,170,0.08);
+        }
+
+        .contact-textarea {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.5;
+        }
+
+        .contact-footer {
+            padding: 0 24px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .contact-status {
+            font-size: 12px;
+            color: #475569;
+            flex: 1;
+        }
+
+        .contact-status.success { color: #00d4aa; }
+        .contact-status.error   { color: #f87171; }
+
+        .btn-send {
+            background: linear-gradient(135deg, #00d4aa, #0099cc);
+            color: #0f172a;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 22px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-send:hover:not(:disabled) {
+            background: linear-gradient(135deg, #00e5b8, #00aadd);
+            box-shadow: 0 4px 14px rgba(0,212,170,0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .contact-link {
+            display: inline-block;
+            font-size: 12px;
+            color: rgba(0,212,170,0.6);
+            text-decoration: none;
+            margin-top: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 0;
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover { color: #00d4aa; }
+
+        @media (max-width: 480px) {
+            .contact-card { border-radius: 20px 20px 0 0; max-width: 100%; }
+            .modal-contact { padding: 0; align-items: flex-end; }
+        }
     </style>
 </head>
 
@@ -1333,6 +1502,8 @@
             <div class="tracking-footer">
                 <p class="footer-text">
                     Puoi acconsentire al tracciamento completo oppure continuare senza — in entrambi i casi la navigazione è libera e nessun dato verrà condiviso con terze parti.
+                    <br>
+                    <button type="button" class="contact-link" id="btn-open-contact">Hai domande o vuoi contattarci? Scrivici qui →</button>
                 </p>
                 <div class="footer-buttons">
                     <button type="button" class="btn btn-refuse" id="btn-consent-no" disabled>✗ &nbsp;Rifiuto</button>
@@ -1340,6 +1511,35 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+
+    <!-- MODALE CONTATTO -->
+    <div id="modal-contact" class="modal-contact" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+        <div class="contact-card">
+            <div class="contact-header">
+                <span id="contact-title" class="contact-title">📬 &nbsp;Contatta TechPortal</span>
+                <button type="button" class="contact-close" id="btn-contact-close" aria-label="Chiudi">&times;</button>
+            </div>
+            <div class="contact-body">
+                <div class="contact-field">
+                    <label class="contact-label" for="contact-name">Nome (opzionale)</label>
+                    <input type="text" id="contact-name" class="contact-input" placeholder="Il tuo nome o nickname" autocomplete="off">
+                </div>
+                <div class="contact-field">
+                    <label class="contact-label" for="contact-email">Email per risposta (opzionale)</label>
+                    <input type="email" id="contact-email" class="contact-input" placeholder="nome@esempio.com" autocomplete="off">
+                </div>
+                <div class="contact-field">
+                    <label class="contact-label" for="contact-message">Messaggio *</label>
+                    <textarea id="contact-message" class="contact-textarea" placeholder="Scrivi qui la tua domanda, segnalazione o commento…"></textarea>
+                </div>
+            </div>
+            <div class="contact-footer">
+                <span class="contact-status" id="contact-status"></span>
+                <button type="button" class="btn-send" id="btn-contact-send">Invia →</button>
+            </div>
         </div>
     </div>
 
@@ -2216,6 +2416,72 @@
             };
 
         })();
+
+            // ── MODALE CONTATTO ──────────────────────────────────────────
+            (function() {
+                const W3F_KEY = 'TUO_ACCESS_KEY_WEB3FORMS'; // ← sostituisci con la tua chiave gratuita da web3forms.com
+
+                const modal   = document.getElementById('modal-contact');
+                const btnOpen = document.getElementById('btn-open-contact');
+                const btnClose= document.getElementById('btn-contact-close');
+                const btnSend = document.getElementById('btn-contact-send');
+                const status  = document.getElementById('contact-status');
+
+                function openContact() { modal.classList.add('active'); }
+                function closeContact() {
+                    modal.classList.remove('active');
+                    status.textContent = '';
+                    status.className = 'contact-status';
+                }
+
+                if (btnOpen)  btnOpen.addEventListener('click', openContact);
+                if (btnClose) btnClose.addEventListener('click', closeContact);
+                modal.addEventListener('click', (e) => { if (e.target === modal) closeContact(); });
+
+                btnSend.addEventListener('click', async () => {
+                    const msg = document.getElementById('contact-message').value.trim();
+                    if (!msg) {
+                        status.textContent = 'Inserisci un messaggio.';
+                        status.className = 'contact-status error';
+                        return;
+                    }
+
+                    btnSend.disabled = true;
+                    status.textContent = 'Invio in corso…';
+                    status.className = 'contact-status';
+
+                    const payload = {
+                        access_key: W3F_KEY,
+                        subject:    'Messaggio da TechPortal',
+                        from_name:  document.getElementById('contact-name').value.trim() || 'Anonimo',
+                        email:      document.getElementById('contact-email').value.trim() || 'noreply@techportal',
+                        message:    msg
+                    };
+
+                    try {
+                        const res  = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            status.textContent = '✓ Messaggio inviato. Grazie!';
+                            status.className = 'contact-status success';
+                            document.getElementById('contact-name').value    = '';
+                            document.getElementById('contact-email').value   = '';
+                            document.getElementById('contact-message').value = '';
+                            setTimeout(closeContact, 2200);
+                        } else {
+                            throw new Error(data.message || 'Errore sconosciuto');
+                        }
+                    } catch(err) {
+                        status.textContent = '✗ Invio fallito. Riprova più tardi.';
+                        status.className = 'contact-status error';
+                        btnSend.disabled = false;
+                    }
+                });
+            })();
     </script>
 </body>
 </html>
