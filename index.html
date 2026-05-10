@@ -2683,7 +2683,9 @@
 
                 if (btnOpen)  btnOpen.addEventListener('click', openContact);
                 if (btnClose) btnClose.addEventListener('click', closeContact);
-                modal.addEventListener('click', (e) => { if (e.target === modal) closeContact(); });
+                // Chiude solo se il click parte E finisce sul backdrop (non propagato dall'interno)
+                modal.addEventListener('mousedown', (e) => { modal._bd = (e.target === modal); });
+                modal.addEventListener('click', (e) => { if (modal._bd && e.target === modal) closeContact(); modal._bd = false; });
 
                 // ── Validazione anti-spam lato client ──
                 function validateContact(name, email, msg) {
